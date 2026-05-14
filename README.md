@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # NoteVault
 
 Full-stack note and file vault built with MongoDB, Express, React, and Node.js.
@@ -14,3 +15,7 @@ Full-stack note and file vault built with MongoDB, Express, React, and Node.js.
 3. Start backend with `npm run dev` in `server/`.
 4. Start frontend with `npm run dev` in `client/`.
 
+=======
+# Mr.Note
+Mr.Note is a full-stack note and file vault built with React, Vite, Node.js, Express, and MongoDB, with nested folders, subfolders, file uploads, search,   and PIN-protected management actions.
+>>>>>>> f968cdc18da0fae04a5cf60d52ecfc03d6b007f5
