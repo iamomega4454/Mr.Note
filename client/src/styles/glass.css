@@ -1,0 +1,170 @@
+:root {
+  --bg-base: #1a1a1f;
+  --bg-surface: #222228;
+  --glass-bg: rgba(255, 255, 255, 0.05);
+  --glass-bg-strong: rgba(255, 255, 255, 0.08);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --glass-hover: rgba(180, 210, 255, 0.1);
+  --glow-blue: rgba(100, 160, 255, 0.4);
+  --text-primary: rgba(255, 255, 255, 0.9);
+  --text-muted: rgba(255, 255, 255, 0.5);
+  --accent: #7eb8ff;
+  --ease-glass: cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.glass-card {
+  position: relative;
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid var(--glass-border);
+  border-radius: 20px;
+  transition: all 0.3s var(--ease-glass);
+}
+
+.glass-panel {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.03));
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+.folder-card:hover,
+.file-card:hover {
+  transform: translateY(-4px) scale(1.01);
+}
+
+.folder-card:hover {
+  background: var(--glass-hover);
+  border-color: rgba(126, 184, 255, 0.35);
+  box-shadow:
+    0 8px 32px rgba(100, 160, 255, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.file-card:hover {
+  background: rgba(255, 255, 255, 0.07);
+  box-shadow: 0 6px 24px rgba(100, 160, 255, 0.15);
+}
+
+.folder-card::before,
+.file-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.06), transparent);
+  background-size: 200% 100%;
+  opacity: 0;
+  transition: opacity 0.3s;
+  pointer-events: none;
+}
+
+.folder-card:hover::before,
+.file-card:hover::before {
+  opacity: 1;
+  animation: shimmer 1.4s infinite linear;
+}
+
+.search-shell {
+  width: min(100%, 380px);
+}
+
+.search-bar {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
+  transition: all 0.4s var(--ease-glass);
+}
+
+.search-bar:focus-within {
+  border-color: rgba(126, 184, 255, 0.5);
+  box-shadow:
+    0 0 0 3px rgba(126, 184, 255, 0.15),
+    0 4px 24px rgba(100, 160, 255, 0.2);
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.search-dropdown {
+  animation: dropdownReveal 0.25s var(--ease-glass);
+  transform-origin: top center;
+}
+
+.dropdown-item {
+  animation: itemFadeIn 0.2s ease both;
+}
+
+.dropdown-item:nth-child(1) { animation-delay: 0ms; }
+.dropdown-item:nth-child(2) { animation-delay: 25ms; }
+.dropdown-item:nth-child(3) { animation-delay: 50ms; }
+.dropdown-item:nth-child(4) { animation-delay: 75ms; }
+.dropdown-item:nth-child(5) { animation-delay: 100ms; }
+.dropdown-item:nth-child(6) { animation-delay: 125ms; }
+.dropdown-item:nth-child(7) { animation-delay: 150ms; }
+.dropdown-item:nth-child(8) { animation-delay: 175ms; }
+
+.dropdown-item:hover,
+.dropdown-item.is-active {
+  background: rgba(126, 184, 255, 0.1);
+  border-left: 2px solid var(--accent);
+}
+
+.liquid-button {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.11), rgba(255, 255, 255, 0.05));
+  transition: all 0.25s var(--ease-glass);
+}
+
+.liquid-button:hover {
+  transform: translateY(-1px);
+  border-color: rgba(126, 184, 255, 0.4);
+  box-shadow: 0 8px 20px rgba(100, 160, 255, 0.14);
+}
+
+.dropzone:hover,
+.dropzone.is-dragging {
+  border-color: rgba(126, 184, 255, 0.45);
+  box-shadow: 0 0 0 4px rgba(126, 184, 255, 0.08);
+}
+
+@keyframes dropdownReveal {
+  from {
+    opacity: 0;
+    transform: scaleY(0.85) translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: scaleY(1) translateY(0);
+  }
+}
+
+@keyframes itemFadeIn {
+  from {
+    opacity: 0;
+    transform: translateX(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    box-shadow: 0 0 0 rgba(100, 160, 255, 0.15);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(100, 160, 255, 0.2);
+  }
+}
+
