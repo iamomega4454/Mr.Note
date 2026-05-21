@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { UploadCloud } from "lucide-react";
+import { UploadCloud, File } from "lucide-react";
 import ModalShell from "./ModalShell";
 
 export default function UploadModal({ folderId, onClose, onSubmit }) {
@@ -17,7 +17,7 @@ export default function UploadModal({ folderId, onClose, onSubmit }) {
   return (
     <ModalShell title="Add File" subtitle="Choose one file to upload. A 6-digit security pin is required." onClose={onClose}>
       <form
-        className="space-y-4"
+        className="space-y-5"
         onSubmit={(event) => {
           event.preventDefault();
           if (!file) {
@@ -34,8 +34,13 @@ export default function UploadModal({ folderId, onClose, onSubmit }) {
           onSubmit(formData);
         }}
       >
+        {/* Dropzone */}
         <label
-          className={`dropzone glass-card block cursor-pointer rounded-3xl border border-dashed border-white/15 px-5 py-8 text-center transition ${dragging ? "is-dragging" : ""}`}
+          className={`dropzone glass-card block cursor-pointer rounded-3xl border-2 border-dashed px-6 py-10 text-center transition-all ${
+            dragging
+              ? "is-dragging border-chalk-yellow/50 bg-chalk-yellow/5"
+              : "border-blackboard-border hover:border-chalk-yellow/30 hover:bg-blackboard-card/50"
+          }`}
           onDragOver={(event) => {
             event.preventDefault();
             setDragging(true);
@@ -48,22 +53,47 @@ export default function UploadModal({ folderId, onClose, onSubmit }) {
           }}
         >
           <input type="file" className="hidden" onChange={(event) => handleFiles(event.target.files)} />
-          <div className="mx-auto mb-3 flex h-14 w-14 items-center justify-center rounded-full bg-blue-300/10 text-blue-100">
-            <UploadCloud size={24} />
+          
+          <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-chalk-blue/20 to-chalk-purple/20 shadow-glow-blue transition-all">
+            {file ? (
+              <File size={28} className="text-chalk-blue" />
+            ) : (
+              <UploadCloud size={28} className="text-chalk-blue" />
+            )}
           </div>
-          <p className="font-medium text-white">{file ? file.name : "Drag a file here or click to browse"}</p>
-          <p className="mt-2 text-sm text-white/50">Up to 100MB.</p>
+          
+          <p className="mb-2 font-medium text-text-primary">
+            {file ? file.name : "Drag a file here or click to browse"}
+          </p>
+          <p className="text-sm text-text-secondary">
+            {file ? `${(file.size / 1024).toFixed(1)} KB` : "Up to 100MB"}
+          </p>
         </label>
 
-        <input
-          value={customName}
-          onChange={(event) => setCustomName(event.target.value)}
-          placeholder="Optional file name"
-          className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-white outline-none transition focus:border-blue-300/40 focus:bg-white/10"
-        />
+        {/* Optional custom name input */}
+        <div className="space-y-2">
+          <label htmlFor="custom-name" className="block text-sm font-medium text-text-secondary">
+            Custom file name (optional)
+          </label>
+          <input
+            id="custom-name"
+            value={customName}
+            onChange={(event) => setCustomName(event.target.value)}
+            placeholder="Leave empty to use original name"
+            className="w-full rounded-2xl border border-blackboard-border bg-blackboard-secondary/50 px-4 py-3.5 text-text-primary outline-none transition-all placeholder:text-text-secondary/50 focus:border-chalk-blue/50 focus:bg-blackboard-card focus:shadow-glow-blue"
+          />
+        </div>
 
-        <button type="submit" className="liquid-button w-full rounded-2xl px-4 py-3 font-medium text-white">
-          Continue
+        {/* Submit button */}
+        <button
+          type="submit"
+          disabled={!file}
+          className="liquid-button group w-full rounded-2xl px-5 py-3.5 font-medium text-text-primary transition-all hover:text-chalk-blue hover:shadow-glow-blue disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:text-text-primary disabled:hover:shadow-none"
+        >
+          <span className="flex items-center justify-center gap-2">
+            Continue
+            <span className="transition-transform group-hover:translate-x-1">→</span>
+          </span>
         </button>
       </form>
     </ModalShell>

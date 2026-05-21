@@ -1,4 +1,4 @@
-import { Search } from "lucide-react";
+import { Search, X } from "lucide-react";
 import { useState } from "react";
 import useSearch from "../hooks/useSearch";
 import SearchDropdown from "./SearchDropdown";
@@ -14,10 +14,17 @@ export default function SearchBar({ onNavigate }) {
     setActiveIndex(-1);
   };
 
+  const handleClear = () => {
+    setQuery("");
+    setResults([]);
+    setActiveIndex(-1);
+  };
+
   return (
     <div className="search-shell relative">
-      <label className="search-bar flex items-center gap-3 px-4 py-3">
-        <Search size={18} className="text-white/45" />
+      <label className="search-bar flex items-center gap-3 px-5 py-3.5">
+        <Search size={18} className="text-text-secondary transition-colors group-focus-within:text-chalk-yellow" />
+        
         <input
           value={query}
           onChange={(event) => {
@@ -38,18 +45,26 @@ export default function SearchBar({ onNavigate }) {
               handlePick(results[activeIndex]);
             }
             if (event.key === "Escape") {
-              setQuery("");
-              setResults([]);
-              setActiveIndex(-1);
+              handleClear();
             }
           }}
-          placeholder="Search files and folders"
-          className="w-full bg-transparent text-sm text-white outline-none placeholder:text-white/35"
+          placeholder="Search files and folders..."
+          className="flex-1 bg-transparent text-sm text-text-primary outline-none placeholder:text-text-secondary/60"
         />
+
+        {query && (
+          <button
+            type="button"
+            onClick={handleClear}
+            className="rounded-full p-1 text-text-secondary transition-all hover:bg-blackboard-card hover:text-text-primary"
+            title="Clear search"
+          >
+            <X size={16} />
+          </button>
+        )}
       </label>
 
       <SearchDropdown results={results} loading={loading} activeIndex={activeIndex} onPick={handlePick} />
     </div>
   );
 }
-
